@@ -27,26 +27,26 @@ import UserPage from "views/UserPage.js";
 var dashRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Welcome",
     icon: "design_app",
     component: Dashboard,
     layout: "/admin",
   },
   {
     path: "/icons",
-    name: "Icons",
+    name: "Choose Assets",
     icon: "design_image",
     component: Icons,
     layout: "/admin",
   },
   {
     path: "/maps",
-    name: "Maps",
+    name: "Track Performance",
     icon: "location_map-big",
     component: Maps,
     layout: "/admin",
   },
-  {
+  /*{
     path: "/notifications",
     name: "Notifications",
     icon: "ui-1_bell-53",
@@ -81,6 +81,6 @@ var dashRoutes = [
     icon: "objects_spaceship",
     component: Upgrade,
     layout: "/admin",
-  },
+  },*/
 ];
 export default dashRoutes;

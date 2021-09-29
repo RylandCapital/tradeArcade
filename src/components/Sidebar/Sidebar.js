@@ -27,6 +27,7 @@ import logo from "logo-white.svg";
 var ps;
 
 function Sidebar(props) {
+  console.log(props)
   const sidebar = React.useRef();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -49,20 +50,20 @@ function Sidebar(props) {
     <div className="sidebar" data-color={props.backgroundColor}>
       <div className="logo">
         <a
-          href="https://www.creative-tim.com?ref=nudr-sidebar"
+          //href="https://www.creative-tim.com?ref=nudr-sidebar"
           className="simple-text logo-mini"
           target="_blank"
         >
           <div className="logo-img">
-            <img src={logo} alt="react-logo" />
+            <img src="//alphadefi.fund/wp-content/uploads/2021/08/noun_alpha_1359359.svg" />
           </div>
         </a>
         <a
-          href="https://www.creative-tim.com?ref=nudr-sidebar"
+          //href="https://www.creative-tim.com?ref=nudr-sidebar"
           className="simple-text logo-normal"
           target="_blank"
         >
-          Creative Tim
+          Trade Arcade
         </a>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>
