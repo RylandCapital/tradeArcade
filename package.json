@@ -5,6 +5,8 @@
   "private": true,
   "homepage": "https://demos.creative-tim.com/now-ui-dashboard-react/#/",
   "dependencies": {
+    "ag-grid-community": "^26.1.0",
+    "ag-grid-react": "^26.1.0",
     "bootstrap": "4.6.0",
     "chart.js": "3.2.1",
     "gulp": "4.0.2",
@@ -13,6 +15,7 @@
     "package.json": "^2.0.1",
     "perfect-scrollbar": "1.5.1",
     "react": "17.0.2",
+    "react-ag-grid": "^17.0.0",
     "react-chartjs-2": "3.0.3",
     "react-dom": "17.0.2",
     "react-notification-alert": "0.0.13",

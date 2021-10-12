@@ -28,6 +28,8 @@ import icons from "variables/icons";
 
 import {Grid} from 'react-virtualized';
 
+
+
 /*.button {
   border: none;
   color: white;
@@ -63,6 +65,20 @@ import {Grid} from 'react-virtualized';
   background-color: #008CBA;
   color: white;
 }*/
+
+
+
+const fetchTickers = () => {
+  const data =  fetch(
+    "https://api.alphadefi.fund/info/tokendict"
+  );
+  items = []
+  Object.keys(data['token']).forEach(key =>
+    items.Push([data[key], addbutton(), removebutton() /* ... */])
+  )
+  return items
+};
+
 
 // Grid data as an array of arrays
 const list = [
@@ -117,8 +133,25 @@ function cellRenderer2({columnIndex, key, rowIndex, style}) {
 }
 
 
+class EnterContest extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      
+    }
+  
+  
+  }
 
-function Icons() {
+  
+  
+ componentDidMount() {
+    // load latest month by default
+    this.fetchTickers()
+
+  }
+render() {
+
   return (
     <>
       <PanelHeader size="sm" />
@@ -135,15 +168,15 @@ function Icons() {
               </CardHeader>
               <CardBody className="all-icons">
                
-                <Grid
+                {/*<Grid
                     cellRenderer={cellRenderer}
-                    columnCount={list[0].length}
+                    columnCount={this.tickers[0].length}
                     columnWidth={150}
                     height={1000}
-                    rowCount={list.length}
+                    rowCount={this.tickers.length}
                     rowHeight={50}
                     width={500}
-                  />,
+                />,*/}
                 
               </CardBody>
             </Card>
@@ -179,5 +212,5 @@ function Icons() {
     </>
   );
 }
-
-export default Icons;
+}
+export default EnterContest;
