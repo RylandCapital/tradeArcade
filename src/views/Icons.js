@@ -143,11 +143,11 @@ class EnterContest extends React.Component {
   
   }
 
-  
+
   
  componentDidMount() {
     // load latest month by default
-    this.fetchTickers()
+   
 
   }
 render() {

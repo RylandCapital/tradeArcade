@@ -34,6 +34,7 @@ import {
   InputGroupAddon,
   Input,
 } from "reactstrap";
+import ConnectWallet from "components/ConnectWallet";
 
 import routes from "routes.js";
 
@@ -185,6 +186,7 @@ function DemoNavbar(props) {
                 </p>
               </Link>
             </NavItem>
+            <ConnectWallet />
           </Nav>
         </Collapse>
       </Container>

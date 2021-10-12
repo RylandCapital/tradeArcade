@@ -5,6 +5,9 @@
   "private": true,
   "homepage": "https://demos.creative-tim.com/now-ui-dashboard-react/#/",
   "dependencies": {
+    "@terra-dev/walletconnect": "^2.2.0",
+    "@terra-money/terra.js": "^2.0.14",
+    "@terra-money/wallet-provider": "^2.2.0",
     "ag-grid-community": "^26.1.0",
     "ag-grid-react": "^26.1.0",
     "bootstrap": "4.6.0",
