@@ -19,7 +19,7 @@ import { thisExpression } from "@babel/types";
 
 function addbutton() {
   return (
-    
+
     <button class="button button1">Add Asset</button>
   );
 }
@@ -76,23 +76,23 @@ class EnterContest extends React.Component {
     this.state = {
 
       tickers: []
-     
+
     }
-  
+
     this.fetchTickers = this.fetchTickers.bind(this)
     this.cellRenderer3 = this.cellRenderer3.bind(this)
- 
+
   }
 
 // this fetch returns a list of lists in the same format as the sample data above (const list)
   fetchTickers() {
     tokenDictApi.getTokenDict().then(apiData => {
-      
+
       const list3 = []
       Object.keys(apiData[0]['token']).forEach(item=>{
         list3.push([item, addbutton(), removebutton() /* ... */])
       })
-      
+
       this.setState({ tickers: list3 });
       console.log(list)
       console.log(list3)
@@ -113,7 +113,7 @@ class EnterContest extends React.Component {
   componentDidMount() {
     // load latest month by default
     this.fetchTickers()
-  
+
   }
 
 
@@ -133,17 +133,17 @@ class EnterContest extends React.Component {
                   </p>
                 </CardHeader>
                 <CardBody className="all-icons">
-                 
+
                   <Grid
-                      cellRenderer={cellRenderer}
-                      columnCount={list[0].length}
+                      cellRenderer={this.cellRenderer3}
+                      columnCount={this.state.tickers.length > 0 ? this.state.tickers[0].length : 0}
                       columnWidth={150}
                       height={1000}
-                      rowCount={list.length}
+                      rowCount={this.state.tickers.length}
                       rowHeight={50}
                       width={500}
                   />
-                  
+
                 </CardBody>
               </Card>
             </Col>
@@ -157,7 +157,7 @@ class EnterContest extends React.Component {
                   </p>
                 </CardHeader>
                 <CardBody className="all-icons">
-                 
+
                   <Grid
                       cellRenderer={cellRenderer2}
                       columnCount={list2[0].length}
@@ -167,8 +167,8 @@ class EnterContest extends React.Component {
                       rowHeight={50}
                       width={500}
                     />,
-  
-                {/*in order to submit youre wallet must be conencted (so we have address of the person entering) and all 10 must be filled out*/} 
+
+                {/*in order to submit youre wallet must be conencted (so we have address of the person entering) and all 10 must be filled out*/}
                 <button class="button button1">Submit</button>
                 </CardBody>
               </Card>
@@ -180,4 +180,3 @@ class EnterContest extends React.Component {
   }
   }
   export default EnterContest;
-  
