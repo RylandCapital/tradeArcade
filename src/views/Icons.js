@@ -148,6 +148,40 @@ class EnterContest extends React.Component {
 
   removeClick(key) {
     console.log(key);
+
+    //get current top 10
+    let current = []
+    this.state.list2.forEach(item => {
+      current.push(item[1])
+
+      }
+    )
+
+    //check if key is already in array
+    let flag = current.includes(key)
+
+    //remove 
+    this.state.list2.forEach(item => {
+      if (item[1] === key && flag === true) {
+
+      let assets = [...this.state.list2];
+      let asset = [...assets[item[0]-1]]
+      console.log(asset)
+
+      asset[1] = 'Empty'
+      console.log(asset)
+      assets[item[0]-1] = asset
+      console.log(assets)
+      
+      this.setState({ list2: assets }, function () {
+        console.log(this.state.list2);
+      });
+
+      }
+
+    })
+
+    this.theGrid.forceUpdate()
   }
 
 
