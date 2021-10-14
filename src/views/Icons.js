@@ -17,57 +17,6 @@ import {Grid} from 'react-virtualized';
 import { thisExpression } from "@babel/types";
 
 
-function addbutton() {
-  return (
-    
-    <button class="button button1">Add Asset</button>
-  );
-}
-
-function removebutton() {
-  return (
-    <button class="button button1">Remove Asset</button>
-  );
-}
-
-function cellRenderer({columnIndex, key, rowIndex, style}) {
-  return (
-    <div key={key} style={style}>
-      {list[rowIndex][columnIndex]}
-    </div>
-  );
-}
-
-function cellRenderer2({columnIndex, key, rowIndex, style}) {
-  return (
-    <div key={key} style={style}>
-      {list2[rowIndex][columnIndex]}
-    </div>
-  );
-}
-
-const list = [
-  ['mAAPL', addbutton(), removebutton() /* ... */],
-  ['mSPY', addbutton(), removebutton() /* ... */],
-  ['mQQQ', addbutton(), removebutton() /* ... */],
-  // And so on...
-];
-
-const list2 = [
-  ['1', 'Empty' /* ... */],
-  ['2', 'Empty' /* ... */],
-  ['3', 'Empty' /* ... */],
-  ['4', 'Empty' /* ... */],
-  ['5', 'Empty' /* ... */],
-  ['6', 'Empty' /* ... */],
-  ['7', 'Empty' /* ... */],
-  ['8', 'Empty' /* ... */],
-  ['9', 'Empty' /* ... */],
-  ['10', 'Empty' /* ... */],
-
-  // And so on...
-];
-
 
 
 class EnterContest extends React.Component {
@@ -75,32 +24,74 @@ class EnterContest extends React.Component {
     super(props)
     this.state = {
 
-      tickers: []
-     
+      tickers: [],
+      list2: [[1, 'Empty' /* ... */],
+      [2, 'Empty' /* ... */],
+      [3, 'Empty' /* ... */],
+      [4, 'Empty' /* ... */],
+      [5, 'Empty' /* ... */],
+      [6, 'Empty' /* ... */],
+      [7, 'Empty' /* ... */],
+      [8, 'Empty' /* ... */],
+      [9, 'Empty' /* ... */],
+      [10, 'Empty' /* ... */]]
     }
-  
+
     this.fetchTickers = this.fetchTickers.bind(this)
+    this.cellRenderer2 = this.cellRenderer2.bind(this)
     this.cellRenderer3 = this.cellRenderer3.bind(this)
- 
+    this.addButton = this.addButton.bind(this)
+    this.addClick = this.addClick.bind(this)
+    this.removeButton = this.removeButton.bind(this)
+    this.removeClick = this.removeClick.bind(this)
+
   }
 
-// this fetch returns a list of lists in the same format as the sample data above (const list)
+  addButton(key) {
+    return (
+      <form onSubmit={(e) => {this.addClick(key); e.preventDefault();}}>
+        <button>Add</button>
+      </form>
+    );
+  }
+
+  removeButton(key) {
+    return (
+      <form onSubmit={(e) => {this.removeClick(key); e.preventDefault();}}>
+        <button>Remove</button>
+      </form>
+    );
+  }
+
+
   fetchTickers() {
     tokenDictApi.getTokenDict().then(apiData => {
-      
+
       const list3 = []
+      list3.push(['ANC', this.addButton('ANC'), this.removeButton('ANC') /* ... */])
+      list3.push(['MIR', this.addButton('MIR'), this.removeButton('MIR')/* ... */])
+      list3.push(['STT', this.addButton('STT'), this.removeButton('STT') /* ... */])
+      list3.push(['LUNA', this.addButton('LUNA'), this.removeButton('LUNA') /* ... */])
+      list3.push(['MINE', this.addButton('MINE'), this.removeButton('MINE') /* ... */])
       Object.keys(apiData[0]['token']).forEach(item=>{
-        list3.push([item, addbutton(), removebutton() /* ... */])
+        list3.push([item, this.addButton(item), this.removeButton(item) /* ... */])
       })
-      
+
       this.setState({ tickers: list3 });
-      console.log(list)
-      console.log(list3)
       console.log(this.state.tickers)
+
     })
   }
 
-  // this gives me an error as this.state.tickers is still undefined? even though this.fetchTickers() is run in componendDidMount()
+  cellRenderer2({columnIndex, key, rowIndex, style}) {
+    return (
+      <div key={key} style={style}>
+        {this.state.list2[rowIndex][columnIndex]}
+      </div>
+    );
+  }
+  
+
   cellRenderer3({columnIndex, key, rowIndex, style}) {
     return (
       <div key={key} style={style}>
@@ -109,11 +100,54 @@ class EnterContest extends React.Component {
     );
   }
 
-
   componentDidMount() {
-    // load latest month by default
     this.fetchTickers()
-  
+  }
+
+  addClick(key) {
+    
+    console.log(key);
+
+    //get current top 10
+    let current = []
+    this.state.list2.forEach(item => {
+      current.push(item[1])
+
+      }
+    )
+
+    //check if key is already in array
+    let flag = current.includes(key)
+
+    //add if not 
+    let added = false
+    this.state.list2.forEach(item => {
+      if (item[1] === 'Empty' && flag === false && added === false ) {
+
+      let assets = [...this.state.list2];
+      let asset = [...assets[item[0]-1]]
+      console.log(asset)
+
+      asset[1] = key
+      console.log(asset)
+      assets[item[0]-1] = asset
+      console.log(assets)
+      
+      this.setState({ list2: assets }, function () {
+        console.log(this.state.list2);
+      });
+
+      added=true
+
+      }
+
+    })
+
+    this.theGrid.forceUpdate()
+  }
+
+  removeClick(key) {
+    console.log(key);
   }
 
 
@@ -133,17 +167,17 @@ class EnterContest extends React.Component {
                   </p>
                 </CardHeader>
                 <CardBody className="all-icons">
-                 
+
                   <Grid
-                      cellRenderer={cellRenderer}
-                      columnCount={list[0].length}
+                      cellRenderer={this.cellRenderer3}
+                      columnCount={this.state.tickers.length > 0 ? this.state.tickers[0].length : 0}
                       columnWidth={150}
-                      height={1000}
-                      rowCount={list.length}
+                      height={800}
+                      rowCount={this.state.tickers.length}
                       rowHeight={50}
                       width={500}
                   />
-                  
+
                 </CardBody>
               </Card>
             </Col>
@@ -157,18 +191,19 @@ class EnterContest extends React.Component {
                   </p>
                 </CardHeader>
                 <CardBody className="all-icons">
-                 
+
                   <Grid
-                      cellRenderer={cellRenderer2}
-                      columnCount={list2[0].length}
+                      ref={(ref) => this.theGrid = ref}
+                      cellRenderer={this.cellRenderer2}
+                      columnCount={this.state.list2[0].length}
                       columnWidth={150}
                       height={500}
-                      rowCount={list2.length}
+                      rowCount={this.state.list2.length}
                       rowHeight={50}
                       width={500}
                     />,
-  
-                {/*in order to submit youre wallet must be conencted (so we have address of the person entering) and all 10 must be filled out*/} 
+
+                {/*in order to submit youre wallet must be conencted (so we have address of the person entering) and all 10 must be filled out*/}
                 <button class="button button1">Submit</button>
                 </CardBody>
               </Card>
@@ -180,4 +215,3 @@ class EnterContest extends React.Component {
   }
   }
   export default EnterContest;
-  
